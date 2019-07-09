@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>LoggingRectangle.qml</file>
+        <file>loggingrectangletest.h</file>
+        <file>loggingrectangletest.cpp</file>
+    </qresource>
+</RCC>
