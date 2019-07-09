@@ -13,8 +13,5 @@ ApplicationWindow {
         anchors.fill: parent
         bordercolor: "green"
     }
-    function log(message){
-        loggingRectangle.log("Diana Uribe eres una mamacita", "info")
-    }
 
 }
