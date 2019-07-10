@@ -7,7 +7,7 @@
 
 struct LoggingRectangle
 {
-public:
+    LoggingRectangle() = delete;
     static void install(const QQmlApplicationEngine&, const QString& objectName = "loggingRectangle");
     static void debugMessageHandler(QtMsgType, const QMessageLogContext&, const QString&);
     static QObject* pLoggingRectangleObject;

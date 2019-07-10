@@ -12,19 +12,27 @@ void LoggingRectangle::install(const QQmlApplicationEngine& engine, const QStrin
 
 
     for (const auto& theApplicationWindowRootObjectChild : theApplicationWindowRootObjectChildren){
+
         auto childrenName = theApplicationWindowRootObjectChild->property("objectName").toString();
         LoggingRectangle::pLoggingRectangleObject = theApplicationWindowRootObjectChild;
+
         if (childrenName == objectName){
+
             qInstallMessageHandler(LoggingRectangle::debugMessageHandler);
             break;
+
         }
+
     }
-    if ( LoggingRectangle::pLoggingRectangleObject){
+    if (LoggingRectangle::pLoggingRectangleObject){
+
         qDebug() << "Logging installed for " << objectName;
         qDebug() << LoggingRectangle::pLoggingRectangleObject;
+
     }
 
 }
+
 void LoggingRectangle::debugMessageHandler(QtMsgType msgType, const QMessageLogContext&, const QString& msg){
 
     auto ob = LoggingRectangle::pLoggingRectangleObject;
