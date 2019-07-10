@@ -74,7 +74,7 @@ void LoggingRectangle::debugMessageHandler(QtMsgType msgType, const QMessageLogC
         auto ret = QVariant("");
         auto messageParameter = QVariant(msg);
         auto messageLevelParameter = QVariant(msgLevel);
-        QMetaObject::invokeMethod(ob, "log", Q_RETURN_ARG(QVariant, ret), Q_ARG(QVariant, messageParameter), Q_ARG(QVariant, messageLevelParameter));
+        QMetaObject::invokeMethod(ob, "log", Q_ARG(QVariant, messageParameter), Q_ARG(QVariant, messageLevelParameter));
 
 }
 QObject* LoggingRectangle::pLoggingRectangleObject{nullptr};
