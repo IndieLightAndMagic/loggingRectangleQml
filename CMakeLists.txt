@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(screen LANGUAGES CXX)
-
+set(CMAKE_BUILD_TYPE DEBUG)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
