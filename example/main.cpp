@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     }, Qt::QueuedConnection);
     engine.load(url);
-    LoggingRectangle::install(engine);
+    LoggingRectangle::install(engine, "loggingRectangle");
 
 
     return app.exec();

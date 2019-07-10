@@ -2,35 +2,53 @@
 #include <QVariant>
 #include <QDebug>
 #include <iostream>
-#include <QQmlApplicationEngine>
+
+static QObject* getObjectPtr(QObjectList pobjects, const QString& objectNames){
+
+    if (pobjects.isEmpty()) return nullptr;
+    auto objectNamesList = objectNames.split(".");
+    auto objectName = objectNamesList[0];
+    auto namesLeft = objectNamesList.count();
+    if (!namesLeft) return nullptr;
+
+
+    for (auto pobject : pobjects){
+        auto pobjectname = pobject->property("objectName").toString();
+        if (pobjectname == objectName){
+
+            objectNamesList.removeAt(0);
+            if (namesLeft == 1) return pobject;
+            return getObjectPtr(pobject->children(), objectNamesList.join("."));
+        }
+    }
+    return nullptr;
+
+}
+void install(QObject* pObject){
+
+    LoggingRectangle::pLoggingRectangleObject = pObject;
+    if (LoggingRectangle::pLoggingRectangleObject){
+        qInstallMessageHandler(LoggingRectangle::debugMessageHandler);
+        qDebug() << "Logging installed for " << pObject->property("objectName");
+        qDebug() << LoggingRectangle::pLoggingRectangleObject;
+
+    } else qInstallMessageHandler(0);
+
+}
+ void LoggingRectangle::install(const QQuickView& view, const QString& objectName){
+
+    auto pitem = view.rootObject();
+    auto pitemname = pitem->property("objectName");
+    auto pobjects = pitem->children();
+
+    ::install(getObjectPtr(pobjects, objectName));
+
+}
 
 void LoggingRectangle::install(const QQmlApplicationEngine& engine, const QString& objectName){
 
-    auto theApplicationWindowRootObject = engine.rootObjects()[0];
-    auto theApplicationWindowRootObjectChildren = theApplicationWindowRootObject->children();
-    qDebug() << "RootName: " << theApplicationWindowRootObject->property("objectName").toString();
-
-
-    for (const auto& theApplicationWindowRootObjectChild : theApplicationWindowRootObjectChildren){
-
-        auto childrenName = theApplicationWindowRootObjectChild->property("objectName").toString();
-        LoggingRectangle::pLoggingRectangleObject = theApplicationWindowRootObjectChild;
-
-        if (childrenName == objectName){
-
-            qInstallMessageHandler(LoggingRectangle::debugMessageHandler);
-            break;
-
-        }
-
-    }
-    if (LoggingRectangle::pLoggingRectangleObject){
-
-        qDebug() << "Logging installed for " << objectName;
-        qDebug() << LoggingRectangle::pLoggingRectangleObject;
-
-    }
-
+    auto pobjects = engine.rootObjects()[0]->children();
+    ::install(getObjectPtr(pobjects, objectName));
 }
 
 void LoggingRectangle::debugMessageHandler(QtMsgType msgType, const QMessageLogContext&, const QString& msg){
