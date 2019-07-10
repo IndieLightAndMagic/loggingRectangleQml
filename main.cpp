@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QDebug>
 
+#include "loggingrectangletest.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,29 +19,8 @@ int main(int argc, char *argv[])
 
     }, Qt::QueuedConnection);
     engine.load(url);
+    LoggingRectangle::install(engine);
 
-    auto theApplicationWindowRootObject = engine.rootObjects()[0];
-    auto theApplicationWindowRootObjectChildren = theApplicationWindowRootObject->children();
-    qDebug() << "RootName: " << theApplicationWindowRootObject->property("objectName").toString();
-
-    QObject* loggingRectangleObject{nullptr};
-
-    for (const auto& theApplicationWindowRootObjectChild : theApplicationWindowRootObjectChildren){
-        auto childrenName = theApplicationWindowRootObjectChild->property("objectName").toString();
-        if (childrenName == "loggingRectangle"){
-            loggingRectangleObject = theApplicationWindowRootObjectChild;
-            qDebug() << "Found ====> " << loggingRectangleObject->property("objectName").toString();
-            break;
-        } else {
-            qDebug() << "Not there yet.... " << childrenName;
-        }
-    }
-
-
-    auto msg = QVariant("Hello from C++");
-    auto info = QVariant("critical");
-    auto ret = QVariant("");
-    QMetaObject::invokeMethod(loggingRectangleObject, "log", Q_RETURN_ARG(QVariant, ret), Q_ARG(QVariant, msg), Q_ARG(QVariant, info));
 
     return app.exec();
 }

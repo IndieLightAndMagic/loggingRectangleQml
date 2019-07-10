@@ -2,16 +2,16 @@
 #define LOGGINGRECTANGLETEST_H
 
 #include <QObject>
+#include <QtGlobal>
+#include <QQmlApplicationEngine>
 
-class LoggingRectangleTest : public QObject
+struct LoggingRectangle
 {
-    Q_OBJECT
 public:
-    explicit LoggingRectangleTest(QObject *parent = nullptr);
+    static void install(const QQmlApplicationEngine&, const QString& objectName = "loggingRectangle");
+    static void debugMessageHandler(QtMsgType, const QMessageLogContext&, const QString&);
+    static QObject* pLoggingRectangleObject;
 
-signals:
-
-public slots:
 };
 
 #endif // LOGGINGRECTANGLETEST_H

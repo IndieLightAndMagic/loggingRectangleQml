@@ -48,10 +48,8 @@ Rectangle {
                     }
                 }
                 Component.onCompleted: {
-                    console.log("My Font Size is ", txt.fontInfo.pixelSize, " (pixels) and ", txt.font.pointSize, " (points)")
                     listView.height = txt.font.pixelSize + txt.topPadding + txt.bottomPadding
                     listView.height *= listModel.count
-                    console.log(listView.height)
                 }
             }
         }
@@ -66,10 +64,6 @@ Rectangle {
 
     Component.onCompleted: {
         listModel.clear()
-        log("el mundo")
-        log("no esta bien", "debug")
-        log("de hecho esta muriendo","fatal")
-        log("todos nos vamos directo al averno","critical")
     }
 
 }
