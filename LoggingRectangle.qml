@@ -44,6 +44,8 @@ Rectangle {
                             txt.color = "red"
                         } else if (message2logLevel == "critical"){
                             txt.color = "yellow"
+                        } else if (message2logLevel == "warning"){
+                            txt.color = "orange"
                         }
                     }
                 }
